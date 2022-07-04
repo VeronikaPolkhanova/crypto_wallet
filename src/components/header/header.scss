@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 10vw;
+    padding: 15px;
+    background: #f3f3f3;
+}
+.rank-crypto {
+    width: 60%;
+    display: flex;
+    p {
+        padding-right: 3%;
+    }
+}
+.wallet-button {
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: 600;
+    color: #aaaaaa;
+}
+.wallet-button :hover {
+    color: #797878;
+}
+.wallet {
+    display: flex;
+    align-items: center;
+    p {
+        padding-right: 10px;
+        font-size: 20px;
+    }
+}
