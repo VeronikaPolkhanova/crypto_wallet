@@ -1,23 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
 
+import { Provider } from 'react-redux';
+
+import store from './store/index';
 import App from './App';
-import CryptoItem from './components/cryptoItem';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.Fragment>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/:id" element={<CryptoItem />} />
-      </Routes>
-    </BrowserRouter>
-  </React.Fragment>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
 

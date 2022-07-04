@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { IoMdAddCircleOutline } from 'react-icons/io';
@@ -6,20 +6,7 @@ import Numeral from 'numeral';
 
 import './table.scss';
 
-function Table() {
-
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        fetch("https://api.coincap.io/v2/assets", {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(json => json.json()).then(a => setData(a.data));
-    }, [])
-
+function Table({ crypto }) {
     const navigate = useNavigate();
     const handleOnClick = useCallback((id) => navigate(`/${id}`, { replace: false, state: id }), [navigate]);
 
@@ -38,7 +25,7 @@ function Table() {
                 </tr>
             </thead>
             <tbody>
-                {data.map(it =>
+                {crypto.map(it =>
                     <tr key={it.id} onClick={() => handleOnClick(it.id)} >
                         <td>{it.rank}</td>
                         <td>{`${it.name} ${it.symbol}`}</td>

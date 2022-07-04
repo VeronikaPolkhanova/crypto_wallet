@@ -1,8 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-import Header from '../header/index';
-
 import './cryptoItem.scss';
 
 function CryptoItem() {
@@ -11,7 +9,6 @@ function CryptoItem() {
     console.log(location)
     return (
         <React.Fragment>
-            <Header />
             <div className="crypto-item">
                 <p>{state}</p>
             </div>
