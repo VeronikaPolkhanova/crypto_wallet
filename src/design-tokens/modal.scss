@@ -1,0 +1,22 @@
+@import "./scss_variabales";
+
+.close-button {
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.input {
+    width: -webkit-fill-available;
+    border: none;
+    border-bottom: 2px solid $border-color;
+    font-size: 16px;
+    padding: 10px 0 4px;
+}
+.input:focus-visible {
+    outline: none;
+}
+.input-container{
+    display: flex;
+}

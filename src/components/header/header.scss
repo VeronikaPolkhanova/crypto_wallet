@@ -1,10 +1,12 @@
+@import "../../design-tokens/scss_variabales";
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 10px 10vw;
-    padding: 15px;
-    background: #f3f3f3;
+    padding: 0 15px;
+    background: $second-color;
 }
 .rank-crypto {
     width: 60%;
@@ -17,10 +19,10 @@
     cursor: pointer;
     font-size: 30px;
     font-weight: 600;
-    color: #aaaaaa;
+    color: $svg-color;
 }
 .wallet-button :hover {
-    color: #797878;
+    color: $svg-color-hover;
 }
 .wallet {
     display: flex;
