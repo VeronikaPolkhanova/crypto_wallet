@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -8,22 +7,15 @@ import {
 
 import Header from './components/header';
 import CryptoItem from './components/cryptoItem';
-import Table from './components/table';
-
-import fetchCrypto from './store/asyncAction';
+import MainPage from './pages/main';
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchCrypto());
-  })
-  const crypto = useSelector(state => state.crypto);
   return (
     <div className="App">
-      <Header crypto={crypto} />
+      <Header />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Table crypto={crypto} />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/:id" element={<CryptoItem />} />
         </Routes>
       </BrowserRouter>

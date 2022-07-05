@@ -1,9 +1,19 @@
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { IoBagRemoveOutline } from 'react-icons/io5';
 import Numeral from 'numeral';
 
+import fetchCrypto from '../../store/asyncAction';
+
 import './header.scss';
 
-function Header({ crypto }) {
+function Header() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchCrypto());
+    }, [])
+    const crypto = useSelector(state => state.crypto);
     return (
         <div className="header">
             <div className="rank-crypto">

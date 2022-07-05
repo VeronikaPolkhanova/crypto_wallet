@@ -8,7 +8,7 @@ import './table.scss';
 
 function Table({ crypto }) {
     const navigate = useNavigate();
-    const handleOnClick = useCallback((id) => navigate(`/${id}`, { replace: false, state: id }), [navigate]);
+    const handleOnClick = useCallback((it) => navigate(`/${it.id}`, { replace: false, state: it }), [navigate]);
 
     return (
         <table className="table">
@@ -26,13 +26,13 @@ function Table({ crypto }) {
             </thead>
             <tbody>
                 {crypto.map(it =>
-                    <tr key={it.id} onClick={() => handleOnClick(it.id)} >
+                    <tr key={it.id} onClick={() => handleOnClick(it)} >
                         <td>{it.rank}</td>
                         <td>{`${it.name} ${it.symbol}`}</td>
                         <td>{Numeral(it.priceUsd).format('$00,00.00')}</td>
-                        <td>{Numeral(+it.marketCapUsd).format('($0.00a)')}</td>
+                        <td>{Numeral(it.marketCapUsd).format('($0.00a)')}</td>
                         <td>{Numeral(it.vwap24Hr).format('$00,00.00')}</td>
-                        <td>{Numeral(+it.supply).format('($0.00a)')}</td>
+                        <td>{Numeral(it.supply).format('($0.00a)')}</td>
                         <td style={{ color: `${+it.changePercent24Hr < 0 ? 'red' : 'green'}` }}>{Numeral(it.changePercent24Hr).format('0.00')}%</td>
                         <td className="td-button">
                             {Numeral(it.volumeUsd24Hr).format('($0.00a)')}
