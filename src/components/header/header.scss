@@ -11,9 +11,9 @@
 .rank-crypto {
     width: 60%;
     display: flex;
-    p {
-        padding-right: 3%;
-    }
+}
+.rank-crypto-p{
+    padding-right: 3%;
 }
 .wallet-button {
     cursor: pointer;
@@ -27,8 +27,8 @@
 .wallet {
     display: flex;
     align-items: center;
-    p {
-        padding-right: 10px;
-        font-size: 20px;
-    }
+}
+.wallet-p {
+    padding-right: 10px;
+    font-size: 20px;
 }

@@ -20,3 +20,44 @@
 .input-container{
     display: flex;
 }
+.total-container{
+    display: flex;
+    justify-content: space-between;
+}
+.modal-body-container{
+    width: inherit;
+    overflow: auto;
+}
+.modal-wallet{
+    height: 90%;
+    width: 90%;
+}
+.wallet-li{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid $border-color;
+}
+.wallet-ul{
+    margin: 0;
+    padding: 0;
+}
+.wallet-total-container{
+    display: flex;
+    justify-content: space-between;
+}
+.total-p{
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.remove-crypto-button{
+    cursor: pointer;
+	font-size: 25px;
+	font-weight: 600;
+	color: $svg-color;
+	display: flex;
+	align-items: center;
+}
+.remove-crypto-button :hover {
+	color: $svg-color-hover;
+}

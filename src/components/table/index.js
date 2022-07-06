@@ -1,10 +1,13 @@
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { AiOutlineClose } from 'react-icons/ai';
 import Modal from 'react-modal';
 import Numeral from 'numeral';
+
+import { AddCryptoAction } from '../../store/actions';
 
 import './table.scss';
 import '../../design-tokens/modal.scss';
@@ -14,48 +17,56 @@ function Table({ crypto }) {
     const navigate = useNavigate();
     const handleOnClick = useCallback((it) => navigate(`/${it.id}`, { replace: false, state: it }), [navigate]);
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalState, setModalState] = useState({
+        isOpen: false,
+        payload: {}
+    });
+    const [countCrypto, setCountCrypto] = useState(1);
+
+    const dispatch = useDispatch();
+    const addCrypto = (item) => {
+        dispatch(AddCryptoAction(item));
+    }
+
     return (
-        <React.Fragment>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Market cap</th>
-                        <th>VWAP(24hr)</th>
-                        <th>Supply</th>
-                        <th>Change(24hr)</th>
-                        <th>Volume(24hr)</th>
+        <table className="table">
+            <thead>
+                <tr className="table-header">
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Market cap</th>
+                    <th>VWAP(24hr)</th>
+                    <th>Supply</th>
+                    <th>Change(24hr)</th>
+                    <th>Volume(24hr)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {crypto.map(it =>
+                    <tr className="table-row" key={it.id} onClick={() => handleOnClick(it)} >
+                        <td>{it.rank}</td>
+                        <td>{`${it.name} ${it.symbol}`}</td>
+                        <td>{Numeral(it.priceUsd).format('$00,00.00')}</td>
+                        <td>{Numeral(it.marketCapUsd).format('($0.00a)')}</td>
+                        <td>{Numeral(it.vwap24Hr).format('$00,00.00')}</td>
+                        <td>{Numeral(it.supply).format('($0.00a)')}</td>
+                        <td style={{ color: `${+it.changePercent24Hr < 0 ? 'red' : 'green'}` }}>{Numeral(it.changePercent24Hr).format('0.00')}%</td>
+                        <td className="td-whith-button">
+                            {Numeral(it.volumeUsd24Hr).format('($0.00a)')}
+                            <span className="add-crypto-button" onClick={(event) => {
+                                setModalState({ ...modalState, isOpen: true, payload: { ...it } });
+                                event.stopPropagation()
+                            }} >
+                                <IoMdAddCircleOutline />
+                            </span>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {crypto.map(it =>
-                        <tr key={it.id} onClick={(e) => handleOnClick(it)} >
-                            <td>{it.rank}</td>
-                            <td>{`${it.name} ${it.symbol}`}</td>
-                            <td>{Numeral(it.priceUsd).format('$00,00.00')}</td>
-                            <td>{Numeral(it.marketCapUsd).format('($0.00a)')}</td>
-                            <td>{Numeral(it.vwap24Hr).format('$00,00.00')}</td>
-                            <td>{Numeral(it.supply).format('($0.00a)')}</td>
-                            <td style={{ color: `${+it.changePercent24Hr < 0 ? 'red' : 'green'}` }}>{Numeral(it.changePercent24Hr).format('0.00')}%</td>
-                            <td className="td-button">
-                                {Numeral(it.volumeUsd24Hr).format('($0.00a)')}
-                                <span className="add-crypto-button" onClick={(event) => {
-                                    setModalIsOpen(true);
-                                    event.stopPropagation()
-                                }} >
-                                    <IoMdAddCircleOutline />
-                                </span>
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                )}
+            </tbody>
             <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={() => setModalIsOpen(false)}
+                isOpen={modalState.isOpen}
+                onRequestClose={() => setModalState({ ...modalState, isOpen: false })}
                 style={{
                     overlay: {
                         backdropFilter: "blur(2px)",
@@ -74,19 +85,27 @@ function Table({ crypto }) {
                         alignItems: "center"
                     }
                 }}>
-                <span onClick={() => setModalIsOpen(false)} className="close-button">
+                <span onClick={() => setModalState({ ...modalState, isOpen: false })} className="close-button">
                     <AiOutlineClose />
                 </span>
-                <h2>Input count of crypto</h2>
-                <div className="input-container">
-                    <input className="input" type="number" min="0" />
-                    <p></p>
-                    <span className="add-crypto-button" onClick={() => setModalIsOpen(false)} >
-                        <IoMdAddCircleOutline />
-                    </span>
+                <div className="modal-body-container">
+                    <h2>Input count of crypto</h2>
+                    <div className="input-container">
+                        <input className="input" type="number" min="1" value={countCrypto} onChange={(e) => setCountCrypto(e.target.value)} />
+                        <span className="add-crypto-button" onClick={() => {
+                            addCrypto({ data: modalState.payload, count: countCrypto })
+                            setModalState({ ...modalState, isOpen: false });
+                        }} >
+                            <IoMdAddCircleOutline />
+                        </span>
+                    </div>
+                    <div className="total-container">
+                        <p>Total:</p>
+                        <p>{Numeral(modalState.payload.priceUsd * countCrypto).format('$00,00.00')}</p>
+                    </div>
                 </div>
             </Modal>
-        </React.Fragment>
+        </table>
     )
 }
 export default Table;

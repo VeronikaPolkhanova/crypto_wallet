@@ -4,8 +4,6 @@ import { useLocation } from "react-router-dom";
 import LineChart from '../lineChart/lineChart';
 import Table from '../table';
 
-import './cryptoItem.scss';
-
 function CryptoItem() {
     const location = useLocation();
     const { state } = location;
