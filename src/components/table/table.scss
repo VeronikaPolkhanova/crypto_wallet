@@ -33,11 +33,7 @@
 .table tbody tr:nth-child(even) {
 	background: $second-color;
 }
-.td-whith-button {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
+
 .add-crypto-button {
 	cursor: pointer;
 	font-size: 25px;
