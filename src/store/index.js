@@ -1,7 +1,15 @@
-import {createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import reducer from './reducer';
+import cryptoReducer from './reducers/cryptoReducer';
+import walletReducer from './reducers/walletReducer';
+import modalReducer from './reducers/modalReducer';
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const rootReducer = combineReducers({
+    crypto: cryptoReducer,
+    wallet: walletReducer,
+    modal: modalReducer
+})
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;

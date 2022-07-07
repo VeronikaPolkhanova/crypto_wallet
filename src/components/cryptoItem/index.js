@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import LineChart from '../lineChart/lineChart';
 import Table from '../table';
+import Modal from '../modal';
 
 function CryptoItem() {
     const location = useLocation();
@@ -43,6 +44,7 @@ function CryptoItem() {
     return (
         <div className="crypto-item">
             <Table crypto={[state]} />
+            <Modal/>
             <div style={{ width: '80%', margin: '0 10%' }}>
                 <LineChart chartData={chartData} />
             </div>

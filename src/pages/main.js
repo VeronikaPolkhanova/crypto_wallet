@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Table from '../components/table';
+import Modal from '../components/modal';
 
 import fetchCrypto from '../store/asyncAction';
 
@@ -12,7 +13,10 @@ function MainPage() {
     }, [])
     const crypto = useSelector(state => state.crypto);
     return (
-        <Table crypto={crypto}/>
+        <React.Fragment>
+            <Table crypto={crypto} />
+            <Modal />
+        </React.Fragment>
     )
 }
 export default MainPage;
